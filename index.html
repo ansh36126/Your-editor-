@@ -69,40 +69,9 @@
         }
 
         /* Additional styles for circles and patterns */
-        .circle {
-            width: 100px;
-            height: 100px;
-            background-color: #ffcc00; /* Yellow */
+        .shape {
+            position: absolute;
             border-radius: 50%;
-            margin: 10px;
-            display: inline-block;
-        }
-
-        .green-square {
-            width: 100px;
-            height: 100px;
-            background-color: #00cc00; /* Green */
-            margin: 10px;
-            display: inline-block;
-        }
-
-        .red-square {
-            width: 100px;
-            height: 100px;
-            background-color: #cc0000; /* Red */
-            margin: 10px;
-            display: inline-block;
-        }
-
-        .kite {
-            width: 0;
-            height: 0;
-            border-left: 50px solid transparent;
-            border-right: 50px solid transparent;
-            border-bottom: 100px solid #3366ff; /* Blue */
-            margin: 10px;
-            display: inline-block;
-            transform: rotate(45deg);
         }
     </style>
 </head>
@@ -140,13 +109,59 @@
 
     </div>
 
-    <!-- Additional circles and patterns -->
-    <div class="container">
-        <div class="circle"></div>
-        <div class="green-square"></div>
-        <div class="red-square"></div>
-        <div class="kite"></div>
-    </div>
+    <!-- JavaScript for dynamically creating shapes -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const container = document.querySelector('.container');
+            const numShapes = 10;
+            let size = 100;
+
+            for (let i = 0; i < numShapes; i++) {
+                const shape = document.createElement('div');
+                shape.classList.add('shape');
+                shape.style.width = size + 'px';
+                shape.style.height = size + 'px';
+                shape.style.backgroundColor = getRandomColor();
+
+                // Prevent overlapping
+                let x, y;
+                do {
+                    x = Math.random() * (container.clientWidth - size);
+                    y = Math.random() * (container.clientHeight - size);
+                } while (isOverlapping(x, y, size));
+
+                shape.style.left = x + 'px';
+                shape.style.top = y + 'px';
+
+                container.appendChild(shape);
+
+                // Decrease size for the next shape
+                size -= 10;
+            }
+
+            // Function to check if a shape overlaps with existing shapes
+            function isOverlapping(x, y, size) {
+                const shapes = document.querySelectorAll('.shape');
+                for (const shape of shapes) {
+                    const rect = shape.getBoundingClientRect();
+                    if (x < rect.right && x + size > rect.left && y < rect.bottom && y + size > rect.top) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            // Function to generate random color
+            function getRandomColor() {
+                const letters = '0123456789ABCDEF';
+                let color = '#';
+                for (let i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+        });
+    </script>
 
     <footer>
         <p>&copy; 2024 Your Name. All rights reserved.</p>
