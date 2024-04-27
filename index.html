@@ -1,172 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Name - Personal Webpage</title>
+    <title>Our Works Include</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
             margin: 0;
             padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #b0c4de; /* dusty blue background */
         }
-
+        
         header {
-            background-color: #333;
-            color: #fff;
+            background-color: #4682b4; /* header color */
             padding: 20px;
             text-align: center;
+            color: white;
         }
-
-        .container {
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-        }
-
-        .section {
-            background-color: #ddd;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-        }
-
-        .work-video {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .work-video img {
-            max-width: 100%;
-            height: auto;
-            margin: 10px;
-            border-radius: 5px;
-        }
-
-        .social-links {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .social-links a {
-            color: #333;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-
+        
         footer {
-            background-color: #333;
-            color: #fff;
+            background-image: linear-gradient(to right, #87ceeb, #4682b4); /* gradient fill */
+            padding: 20px;
             text-align: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
+            color: white;
         }
-
-        /* Additional styles for circles and patterns */
+        
+        .shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
         .shape {
             position: absolute;
-            border-radius: 50%;
+        }
+        
+        .social {
+            margin-top: 20px;
+        }
+        
+        .video-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
         }
     </style>
 </head>
-
 <body>
-
     <header>
-        <h1>Your Name</h1>
-        <p>Welcome to my personal webpage</p>
+        <h1>Our Works Include</h1>
     </header>
 
-    <div class="container">
-
-        <section class="section">
-            <h2>Our Work</h2>
-            <div class="work-video">
-                <!-- Add your short edited videos here -->
-                <img src="video1.jpg" alt="Video 1">
-                <img src="video2.jpg" alt="Video 2">
-                <img src="video3.jpg" alt="Video 3">
-                <!-- Add more video thumbnails as needed -->
-            </div>
-        </section>
-
-        <section class="section">
-            <h2>Social Handles</h2>
-            <div class="social-links">
-                <!-- Add your social media links here -->
-                <a href="https://twitter.com/yourhandle" target="_blank">Twitter</a>
-                <a href="https://instagram.com/yourhandle" target="_blank">Instagram</a>
-                <a href="https://facebook.com/yourhandle" target="_blank">Facebook</a>
-                <!-- Add more social media links as needed -->
-            </div>
-        </section>
-
-    </div>
-
-    <!-- JavaScript for dynamically creating shapes -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const container = document.querySelector('.container');
-            const numShapes = 10;
-            let size = 100;
-
-            for (let i = 0; i < numShapes; i++) {
-                const shape = document.createElement('div');
-                shape.classList.add('shape');
-                shape.style.width = size + 'px';
-                shape.style.height = size + 'px';
-                shape.style.backgroundColor = getRandomColor();
-
-                // Prevent overlapping
-                let x, y;
-                do {
-                    x = Math.random() * (container.clientWidth - size);
-                    y = Math.random() * (container.clientHeight - size);
-                } while (isOverlapping(x, y, size));
-
-                shape.style.left = x + 'px';
-                shape.style.top = y + 'px';
-
-                container.appendChild(shape);
-
-                // Decrease size for the next shape
-                size -= 10;
-            }
-
-            // Function to check if a shape overlaps with existing shapes
-            function isOverlapping(x, y, size) {
-                const shapes = document.querySelectorAll('.shape');
-                for (const shape of shapes) {
-                    const rect = shape.getBoundingClientRect();
-                    if (x < rect.right && x + size > rect.left && y < rect.bottom && y + size > rect.top) {
-                        return true;
-                    }
-                }
-                return false;
-            }
-
-            // Function to generate random color
-            function getRandomColor() {
-                const letters = '0123456789ABCDEF';
-                let color = '#';
-                for (let i = 0; i < 6; i++) {
-                    color += letters[Math.floor(Math.random() * 16)];
-                }
-                return color;
-            }
-        });
-    </script>
+    <main>
+        <div class="video-container">
+            <!-- Add your videos here -->
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </main>
 
     <footer>
-        <p>&copy; 2024 Your Name. All rights reserved.</p>
+        <div class="shapes">
+            <!-- Generate 20 random shapes with random colors and positions without overlapping -->
+            <?php
+            $colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff']; // Array of colors
+            $used_positions = []; // Array to keep track of used positions
+            
+            for ($i = 0; $i < 20; $i++) {
+                $size = rand(20, 100);
+                $color = $colors[rand(0, count($colors) - 1)];
+                
+                do {
+                    $top = rand(0, 100);
+                    $left = rand(0, 100);
+                    $position = $top . '-' . $left;
+                } while (in_array($position, $used_positions));
+                
+                array_push($used_positions, $position);
+                
+                echo '<div class="shape" style="width: ' . $size . 'px; height: ' . $size . 'px; top: ' . $top . '%; left: ' . $left . '%; background-color: ' . $color . '; border-radius: 50%;"></div>';
+            }
+            ?>
+        </div>
+        <div class="social">
+            <!-- Add your social handles here -->
+            <a href="https://www.facebook.com">Facebook</a> |
+            <a href="https://www.twitter.com">Twitter</a> |
+            <a href="https://www.instagram.com">Instagram</a>
+        </div>
     </footer>
-
 </body>
-
 </html>
